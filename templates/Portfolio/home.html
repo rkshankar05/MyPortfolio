@@ -9,20 +9,24 @@
         <div class="container">
             <div class="row align-items-center" style="min-height: 70vh;">
                 <div class="col-lg-12 text-center">
-                    <!-- CORRECT -->
-                        {% if about.profile_image %}
-                            <img src="{{ about.profile_image.url }}" alt="{{ about.name }}" 
-                                class="rounded-circle profile-image-hover" 
-                                style="width: 280px; height: 280px; object-fit: cover; border: 6px solid var(--dark-brown);">
-                        {% else %}
-                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile">
-                        {% endif %}
+                    {% if about %}
+                        <!-- Profile Image -->
+                        <div class="profile-container mb-4">
+                            {% if about.profile_image %}
+                                <img src="{{ about.profile_image.url }}" alt="{{ about.name }}" 
+                                    class="rounded-circle profile-image-hover" 
+                                    style="width: 280px; height: 280px; object-fit: cover; border: 6px solid var(--dark-brown);">
+                            {% endif %}
+                        </div>
+                        
                         <h1 class="display-3 fw-bold text-brown mb-4">{{ about.name }}</h1>
                         <h2 class="display-6 fw-bold text-medium-brown mb-3">{{ about.title }}</h2>
                         <p class="lead text-brown mt-4">{{ about.tagline|default:"Welcome to my portfolio" }}</p>
+                        
                         {% if about.bio %}
                         <p class="text-brown mt-3" style="max-width: 800px; margin: 0 auto;">{{ about.bio }}</p>
                         {% endif %}
+                        
                         <div class="mt-4">
                             <a href="{% url 'Experience' %}" class="btn btn-lg me-3" style="background-color: var(--dark-brown); color: white;">View Experience</a>
                             {% if about.resume_file %}
@@ -70,7 +74,6 @@
     z-index: 100;
 }
 
-/* Smooth return animation */
 .profile-image-hover:not(:hover) {
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
