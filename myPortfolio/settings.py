@@ -106,30 +106,40 @@ STORAGES = {
 # AWS S3 Configuration for Media Files
 USE_S3 = config('USE_S3', default=False, cast=bool)
 
+# AWS S3 Configuration for Media Files
+USE_S3 = config('USE_S3', default=False, cast=bool)
+
 if USE_S3:
-    # AWS S3 settings
     AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='ap-south-1')  # Change to your region
+    AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='ap-south-1')
+
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-    AWS_DEFAULT_ACL = 'public-read'
+
+    # ✅ IMPORTANT: Disable ACLs (required for modern S3 buckets)
+    AWS_DEFAULT_ACL = None
+    AWS_QUERYSTRING_AUTH = False
+
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
-    
-    # Media files configuration
+
+    # Media storage on S3
     STORAGES["default"] = {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
     }
+
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
 else:
-    # Local media files (for development)
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
+
     STORAGES["default"] = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     }
+
 
 # Security settings for production
 if not DEBUG:
