@@ -1,0 +1,77 @@
+{% extends 'Portfolio/base.html' %}
+
+{% block title %}Home - My Portfolio{% endblock %}
+
+{% block content %}
+<main>
+    <section id="home" class="bg-light-brown py-5">
+        <div class="container">
+            <div class="row align-items-center" style="min-height: 70vh;">
+                <div class="col-lg-12 text-center">
+                    {% if about %}
+                        {% if about.profile_image %}
+                        <div class="profile-container mb-4 mx-auto">
+                            <img src="{{ about.profile_image.url }}" alt="{{ about.name }}" 
+                                 class="rounded-circle profile-image-hover" 
+                                 style="width: 280px; height: 280px; object-fit: cover; border: 6px solid var(--dark-brown);">
+                        </div>
+                        {% endif %}
+                        <h1 class="display-3 fw-bold text-brown mb-4">{{ about.name }}</h1>
+                        <h2 class="display-6 fw-bold text-medium-brown mb-3">{{ about.title }}</h2>
+                        <p class="lead text-brown mt-4">{{ about.tagline|default:"Welcome to my portfolio" }}</p>
+                        {% if about.bio %}
+                        <p class="text-brown mt-3" style="max-width: 800px; margin: 0 auto;">{{ about.bio }}</p>
+                        {% endif %}
+                        <div class="mt-4">
+                            <a href="{% url 'Experience' %}" class="btn btn-lg me-3" style="background-color: var(--dark-brown); color: white;">View Experience</a>
+                            {% if about.resume_file %}
+                            <a href="{{ about.resume_file.url }}" download class="btn btn-outline-dark btn-lg">Download Resume</a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <h1 class="display-3 fw-bold text-brown mb-4">Kripa Shankar</h1>
+                        <h2 class="display-5 fw-bold text-brown mb-3">Welcome to My Portfolio</h2>
+                        <p class="lead text-brown mt-4">Your tagline or brief introduction goes here</p>
+                        <div class="alert alert-info mt-4 mx-auto" style="max-width: 600px;">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Please add your profile information in the admin panel at <a href="/admin">/admin</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+.profile-container {
+    perspective: 1000px;
+    display: inline-block;
+}
+
+.profile-image-hover {
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateZ(0);
+    filter: brightness(1) saturate(1);
+    border-radius: 50% !important;
+}
+
+.profile-image-hover:hover {
+    transform: scale(1.15) translateY(-15px) translateZ(30px) rotateX(10deg) rotateY(5deg);
+    box-shadow: 
+        0 35px 70px rgba(0, 0, 0, 0.4),
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 -8px 20px rgba(255, 255, 255, 0.4),
+        inset 8px 0 15px rgba(255, 255, 255, 0.3);
+    border-color: #D2691E !important;
+    border-width: 8px !important;
+    filter: brightness(1.1) saturate(1.2) drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+    z-index: 100;
+}
+
+/* Smooth return animation */
+.profile-image-hover:not(:hover) {
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+</style>
+{% endblock content %}
