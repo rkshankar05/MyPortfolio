@@ -8,13 +8,13 @@
         <div class="container">
             <div class="row align-items-center" style="min-height: 70vh;">
                 <div class="col-lg-12 text-center">
-                    {% if about %}
+                    <!-- CORRECT -->
                         {% if about.profile_image %}
-                        <div class="profile-container mb-4 mx-auto">
-                            <img src="{{ myPortfolio/media/profile/RK.jpg }}" alt="{{ about.name }}" 
-                                 class="rounded-circle profile-image-hover" 
-                                 style="width: 280px; height: 280px; object-fit: cover; border: 6px solid var(--dark-brown);">
-                        </div>
+                            <img src="{{ about.profile_image.url }}" alt="{{ about.name }}" 
+                                class="rounded-circle profile-image-hover" 
+                                style="width: 280px; height: 280px; object-fit: cover; border: 6px solid var(--dark-brown);">
+                        {% else %}
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile">
                         {% endif %}
                         <h1 class="display-3 fw-bold text-brown mb-4">{{ about.name }}</h1>
                         <h2 class="display-6 fw-bold text-medium-brown mb-3">{{ about.title }}</h2>
