@@ -106,8 +106,9 @@ STORAGES = {
 # AWS S3 Configuration for Media Files
 USE_S3 = config('USE_S3', default=False, cast=bool)
 
-# AWS S3 Configuration for Media Files
-USE_S3 = config('USE_S3', default=False, cast=bool)
+# 🔒 Always use S3 in production
+if not DEBUG:
+    USE_S3 = True
 
 if USE_S3:
     AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
@@ -117,7 +118,7 @@ if USE_S3:
 
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-    # ✅ IMPORTANT: Disable ACLs (required for modern S3 buckets)
+    # ✅ Required for modern S3 buckets
     AWS_DEFAULT_ACL = None
     AWS_QUERYSTRING_AUTH = False
 
@@ -125,7 +126,6 @@ if USE_S3:
         'CacheControl': 'max-age=86400',
     }
 
-    # Media storage on S3
     STORAGES["default"] = {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
     }
