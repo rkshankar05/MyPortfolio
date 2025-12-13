@@ -21,15 +21,23 @@
                     <!-- Experience Item -->
                     <div class="card mb-4 shadow">
                         <div class="card-body bg-very-light-brown p-4">
-                            <h4 class="text-brown fw-bold mb-2">{{ experience.project_name }}</h4>
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div>
+                                    <h1 class="text-brown fw-bold mb-1">{{ experience.project_name }}</h1>
+                                    {% if experience.organization %}
+                                    <h3 class="text-medium-brown mb-0">{{ experience.organization }}</h3>
+                                    {% endif %}
+                                </div>
+                                {% if experience.project_link %}
+                                <a href="{{ experience.project_link }}" target="_blank" class="btn btn-outline-dark d-flex align-items-center">
+                                    <i class="fas fa-external-link-alt me-2"></i>
+                                    View Project
+                                </a>
+                                {% endif %}
+                            </div>
                             
-                            {% if experience.organization %}
-                            <h5 class="text-medium-brown mb-3">{{ experience.organization }}</h5>
-                            {% endif %}
-                            
-                            
-                        {% if experience.details.all %}
-                             <div class="mb-3">
+                            {% if experience.details.all %}
+                            <div class="mb-3">
                                 <ul class="text-brown" style="line-height: 1.8;">
                                     {% with first_detail=experience.details.all.0 %}
                                         {% if first_detail %}
@@ -38,7 +46,6 @@
                                     {% endwith %}
                                 </ul>
                             </div>
-
                             {% endif %}
                             
                             {% if experience.tech_stack.all %}
@@ -64,7 +71,7 @@
                         <i class="fas fa-info-circle me-2"></i>
                         No experience added yet. Please add your experience in the <a href="/admin" class="alert-link">admin panel</a>.
                     </div>
-                    {% endfor %}
+                    {% endfor %}  <!-- THIS WAS MISSING! -->
                 </div>
             </div>
         </div>
