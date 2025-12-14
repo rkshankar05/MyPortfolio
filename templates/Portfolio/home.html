@@ -21,11 +21,13 @@
                         
                         <h1 class="display-3 fw-bold text-brown mb-4">{{ about.name }}</h1>
                         <h2 class="display-6 fw-bold text-medium-brown mb-3">{{ about.title }}</h2>
-                        <p class="lead text-brown mt-4">{{ about.tagline|default:"Welcome to my portfolio" }}</p>
                         
                         {% if about.bio %}
-                        <p class="text-brown mt-3" style="max-width: 800px; margin: 0 auto;">{{ about.bio }}</p>
+                        <p class="text-brown mt-3 fw-bold" style="max-width: 800px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8; font-family: 'Playfair Display', 'Georgia', serif;">
+                            {{ about.bio }}
+                        </p>
                         {% endif %}
+
                         
                         <div class="mt-4">
                             <a href="{% url 'Experience' %}" class="btn btn-lg me-3" style="background-color: var(--dark-brown); color: white;">View Experience</a>
