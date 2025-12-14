@@ -63,14 +63,11 @@ WSGI_APPLICATION = 'myPortfolio.wsgi.application'
 
 # Database
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        'NAME':config('NAME'),
-        'USER':config('USER'),
-        'PASSWORD':config('PASSWORD'),
-        'HOST':config('HOST'),
-        'PORT':config('PORT')
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 # Password validation
