@@ -37,21 +37,14 @@
             background-color: var(--very-light-brown);
         }
         
-        header {
+        header,
+        footer {
             flex-shrink: 0;
         }
         
         main {
             flex: 1 0 auto;
-            padding-top: 56px;
-        }
-        
-        footer {
-            flex-shrink: 0;
-        }
-        
-        .navbar-nav .nav-item {
-            margin-left: 30px;
+            padding-top: 64px;
         }
         
         .bg-dark-brown {
@@ -80,14 +73,106 @@
         
         .navbar-dark .navbar-nav .nav-link {
             color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
         
         .navbar-dark .navbar-nav .nav-link:hover {
-            color: var(--very-light-brown);
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.12);
         }
         
         .navbar-dark .navbar-nav .nav-link.active {
-            color: var(--very-light-brown);
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .site-navbar {
+            min-height: 64px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .site-footer {
+            padding: 1.75rem 0 1.25rem;
+        }
+
+        .footer-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .site-footer h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            flex: 1 1 auto;
+            max-width: 900px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            min-width: 0;
+            text-align: left;
+        }
+
+        .contact-item i {
+            width: 1.25rem;
+            flex: 0 0 auto;
+            text-align: center;
+        }
+
+        .contact-item p,
+        .contact-item a {
+            overflow-wrap: anywhere;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.55rem;
+            flex: 0 0 auto;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.14);
+            transform: translateY(-2px);
         }
         
         .card {
@@ -102,6 +187,52 @@
         section {
             min-height: calc(100vh - 56px - 300px);
         }
+
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                padding: 0.75rem 0 0.35rem;
+            }
+
+            .navbar-dark .navbar-nav .nav-link {
+                padding: 0.7rem 0.9rem;
+            }
+
+            .footer-main {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .site-footer h4 {
+                width: 100%;
+                text-align: center;
+            }
+
+            .contact-grid {
+                flex-basis: 100%;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            main {
+                padding-top: 60px;
+            }
+
+            .site-navbar {
+                min-height: 60px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .contact-item {
+                justify-content: flex-start;
+                max-width: 330px;
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
@@ -109,8 +240,9 @@
     
     <!-- Header/Navigation -->
     <header class="fixed-top">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark-brown">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark-brown site-navbar">
             <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">Kripa Shankar</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -133,59 +265,67 @@
     {% endblock content %}
     
     <!-- Footer with Contact -->
-    <footer class="bg-dark-brown text-white py-4">
+    <footer class="bg-dark-brown text-white site-footer">
         <div class="container">
-            <h4 class="text-center mb-3">Contact Me</h4>
+            <div class="footer-main">
+            <h4>Contact Me</h4>
             {% if about %}
-            <div class="row justify-content-center">
-                <div class="col-md-3 text-center mb-3">
-                    <i class="fas fa-envelope fa-lg mb-2"></i>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <i class="fas fa-envelope fa-lg"></i>
                     <p class="mb-0 small"><a href="mailto:{{ about.email }}?subject=Portfolio%20Contact" target="_top" class="text-white text-decoration-none">{{ about.email }}</a></p>
                 </div>
-                <div class="col-md-3 text-center mb-3">
-                    <i class="fas fa-phone fa-lg mb-2"></i>
+                <div class="contact-item">
+                    <i class="fas fa-phone fa-lg"></i>
                     <p class="mb-0 small">
                         <a href="tel:{{ about.phone }}" class="text-white text-decoration-none">{{ about.phone }}</a>
                     </p>
                 </div>
-                <div class="col-md-3 text-center mb-3">
-                    <i class="fas fa-map-marker-alt fa-lg mb-2"></i>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt fa-lg"></i>
                     <p class="mb-0 small">{{ about.location }}</p>
                 </div>
             </div>
-            <div class="row justify-content-center mt-3">
-                <div class="col-12 text-center">
+            {% if about.twitter or about.linkedin or about.github %}
+            <div class="social-links">
                     {% if about.twitter %}
-                    <a href="{{ about.twitter }}" target="_blank" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="{{ about.twitter }}" target="_blank" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
                     {% endif %}
                     {% if about.linkedin %}
-                    <a href="{{ about.linkedin }}" target="_blank" class="text-white me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="{{ about.linkedin }}" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
                     {% endif %}
                     {% if about.github %}
-                    <a href="{{ about.github }}" target="_blank" class="text-white"><i class="fab fa-github fa-lg"></i></a>
+                    <a href="{{ about.github }}" target="_blank" aria-label="GitHub"><i class="fab fa-github fa-lg"></i></a>
                     {% endif %}
-                </div>
             </div>
             {% else %}
-            <div class="row justify-content-center">
-                <div class="col-md-3 text-center mb-3">
-                    <i class="fas fa-envelope fa-lg mb-2"></i>
+            <div class="social-links" aria-hidden="true"></div>
+            {% endif %}
+            {% else %}
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <i class="fas fa-envelope fa-lg"></i>
                     <p class="mb-0 small"><a href="mailto:rkshankar.13138@gmail.com?subject=Portfolio%20Contact" target="_top" class="text-white text-decoration-none">rkshankar.13138@gmail.com</a></p>
                 </div>
-                <div class="col-md-3 text-center mb-3">
-                    <i class="fas fa-phone fa-lg mb-2"></i>
+                <div class="contact-item">
+                    <i class="fas fa-phone fa-lg"></i>
                     <p class="mb-0 small">
                         <a href="tel:+919026711483" class="text-white text-decoration-none">+91 9026711483</a>
                     </p>
                 </div>
-                <div class="col-md-3 text-center mb-3">
-                    <i class="fas fa-map-marker-alt fa-lg mb-2"></i>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt fa-lg"></i>
                     <p class="mb-0 small">Kolkata, West Bengal, India</p>
                 </div>
             </div>
+            <div class="social-links">
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
+                <a href="#" aria-label="GitHub"><i class="fab fa-github fa-lg"></i></a>
+            </div>
             {% endif %}
+            </div>
             <hr class="my-3 bg-white opacity-25">
-            <p class="text-center mb-0 small">&copy; 2025 {% if about %}{{ about.name }}{% else %}Kripa Shankar{% endif %}. All Rights Reserved.</p>
+            <p class="text-center mb-0 small">&copy; {% now "Y" %} Kripa Shankar. All Rights Reserved.</p>
         </div>
     </footer>
     
